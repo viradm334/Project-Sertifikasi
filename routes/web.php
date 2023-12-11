@@ -36,13 +36,13 @@ Route::get('/register', [RegisterController::class, 'index']);
 
 //Route::post('/register', [RegisterController::class, 'store']);
 
-/* Route::get('/dashboard', function(){
+Route::get('/dashboard', function(){
     return view('dashboard.index');
 });
 
-Route::resource('/dashboard/categories', [CategoryController::class, 'index']);
+// Route::resource('/dashboard/categories', [CategoryController::class, 'index']);
 
-Route::resource('/dashboard/users', [UserController::class, 'index']);
+// Route::resource('/dashboard/users', [UserController::class, 'index']);
 
-Route::resource('/dashboard/products', [ProductController::class, 'index']); */
+// Route::resource('/dashboard/products', [ProductController::class, 'index']); */
 
