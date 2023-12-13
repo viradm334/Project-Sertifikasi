@@ -5,7 +5,7 @@
   <div class="card mx-auto mb-3">
     <div class="row g-0">
       <div class="col-md-6 p-2">
-        <img src="{{ $p->image }}" class="img-fluid rounded-start" alt="...">
+        <img src="{{ asset('storage/' . $p->image) }}" alt="" class="img-fluid">
       </div>
       <div class="col-md-6">
         <div class="card-body">

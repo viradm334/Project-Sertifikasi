@@ -44,7 +44,7 @@
     @foreach ($products as $product)
     <div class="col-3">
         <div class="card mb-5 p-2 me-3">
-        <img src="{{ $product->image }}" class="card-img-top" alt="{{ $product->name }}">
+            <img src="{{ asset('storage/' . $product->image) }}" alt="" class="img-fluid">
         <div class="card-body">
             <h5 class="card-title">{{ $product->name }}</h5>
             <h6 class="card-text">{{ $product->category->name }}</h6>
@@ -53,7 +53,7 @@
         </div>
         </div>
     </div>
-    
+
     @endforeach
 </div>
 @endsection

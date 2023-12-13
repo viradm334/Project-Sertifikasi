@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\PeminjamanModel;
@@ -16,10 +15,10 @@ class pinjamController extends Controller
         $request["return_date"] = Carbon::now()->addDays(5)->toDateString();
         try {
             DB::beginTransaction();
-            Order::create($request->except('category'));
+            PeminjamanModel::create($request->except('category'));
             DB::commit();
 
-            $alatpinjam = order::where('actual_return_date', $request->actual_return_date);
+            $alatpinjam = PeminjamanModel::where('actual_return_date', $request->actual_return_date);
             $alat = $alatpinjam->first();
             $alat->save();
             return redirect('/');
@@ -27,5 +26,5 @@ class pinjamController extends Controller
             DB::rollback();
             dd($throw);
         }
-}
+    }
 }
