@@ -7,13 +7,13 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link {{ ($active === "home" ? 'active' : '') }}" href="/">Home</a>
+            <a class="nav-link {{ ($title === "Home" ? 'active' : '') }}" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ ($active === "posts" ? 'active' : '') }}" href="/products">Products</a>
+            <a class="nav-link {{ ($title === "Products" ? 'active' : '') }}" href="/products">Products</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ ($active === "categories" ? 'active' : '') }}" href="/categories">Categories</a>
+            <a class="nav-link {{ ($title === "categories" ? 'active' : '') }}" href="/categories">Category</a>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
@@ -35,7 +35,7 @@
               </li>
             @else
             <li class="nav-item">
-              <a href="/login" class="nav-link {{ ($active === "login" ? 'active' : '') }}"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+              <a href="/login" class="nav-link {{ ($title === "login" ? 'active' : '') }}"><i class="bi bi-box-arrow-in-right"></i> Login</a>
             </li>
             @endauth
         </ul>
