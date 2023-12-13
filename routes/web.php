@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
@@ -26,23 +27,31 @@ Route::get('/', function () {
     ]);
 });
 
-//Route::get('/products', [ProductController::class, 'index']);
+//Route::get('/products', ProductController::class);
 
 //Route::get('/products/{product:slug}', [ProductController::class, 'show']);
 
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+
+Route::post('/login', [LoginController::class, 'authenticate']);
+
+Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::get('/register', [RegisterController::class, 'index']);
 
-//Route::post('/register', [RegisterController::class, 'store']);
+Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/dashboard', function(){
     return view('dashboard.index');
-});
+})->middleware('admin');
 
-// Route::resource('/dashboard/categories', [CategoryController::class, 'index']);
+Route::resource('/dashboard/categories', CategoryController::class);
 
-// Route::resource('/dashboard/users', [UserController::class, 'index']);
+Route::resource('/dashboard/users', UserController::class);
 
-// Route::resource('/dashboard/products', [ProductController::class, 'index']); */
+Route::resource('/dashboard/products', ProductController::class);
+
+Route::resource('/dashboard/orders', OrderController::class);
+
+Route::get('/dashboard/categories/checkSlug', [CategoryController::class, 'checkSlug']);
 
