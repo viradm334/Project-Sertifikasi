@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Category;
+use App\Models\Product;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,13 +23,70 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         User::create([
-            'name' => 'Vira Damayanti',
-            'email' => 'viradamayanti@gmail.com',
-            'username' => 'vira123',
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'username' => 'adminweb',
             'password' => bcrypt('password'),
             'is_admin' => 1
         ]);
 
-        User::factory(3)->create();
+        User::factory(5)->create();
+
+        Category::create([
+            'name' => 'Televisi',
+            'slug' => 'televisi'
+        ]);
+
+        Category::create([
+            'name' => 'Mesin Cuci',
+            'slug' => 'mesin-cuci'
+        ]);
+
+        Category::create([
+            'name' => 'Kulkas',
+            'slug' => 'kulkas'
+        ]);
+
+        Category::create([
+            'name' => 'Radio',
+            'slug' => 'radio'
+        ]);
+
+        Category::create([
+            'name' => 'Coffee Maker',
+            'slug' => 'coffee-maker'
+        ]);
+
+        Category::create([
+            'name' => 'Mesin Fotokopi',
+            'slug' => 'mesin-fotokopi'
+        ]);
+
+        Product::create([
+            'name' => 'TV LG Series A012',
+            'slug' => 'tv-lg-series-a012',
+            'description' => 'TV keluaran terbaru',
+            'stock' => 5,
+            'price' => 100000,
+            'category_id' => 1
+        ]);
+
+        Product::create([
+            'name' => 'Electrolux Series Z712',
+            'slug' => 'electrolux-series-z712',
+            'description' => 'Mesin cuci andalan laundry se-Indonesia',
+            'stock' => 2,
+            'price' => 200000,
+            'category_id' => 2
+        ]);
+
+        Product::create([
+            'name' => 'Kulkas Panasonic Series A012',
+            'slug' => 'kulkas-panasonic-series-a012',
+            'description' => 'Kulkas double door yang bisa menampung semua belanjaan Anda!',
+            'stock' => 4,
+            'price' => 300000,
+            'category_id' => 3
+        ]);
     }
 }

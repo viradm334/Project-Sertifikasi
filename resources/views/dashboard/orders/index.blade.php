@@ -14,19 +14,19 @@
     
 @endif
 
-<div class="table-responsive small col-lg-11">
+<div class="table-responsive small col-lg-13">
     <table class="table table-striped table-sm">
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Nama Peminjam</th>
-          <th scope="col">Nama Produk</th>
-          <th scope="col">Unit</th>
-          <th scope="col">Tanggal Pinjam</th>
-          <th scope="col">Tanggal Kembali</th>
-          <th scope="col">Sudah dikembalikan</th>
+          <th scope="col">Renter</th>
+          <th scope="col">Product</th>
+          <th scope="col">Rent Date</th>
+          <th scope="col">Rent Limit</th>
+          <th scope="col">Status</th>
+          <th scope="col">Actual Return Date</th>
           <th scope="col">Denda</th>
-          <th scope="col">Aksi</th>
+          <th scope="col" class="aksi">Aksi</th>
         </tr>
       </thead>
       <tbody>
@@ -35,19 +35,26 @@
           <td>{{ $loop->iteration }}</td>
           <td>{{ $order->user->name }}</td>
           <td>{{ $order->product->name }}</td>
-          <td>{{ $order->name }}</td>
-          <td>{{ $order->tgl_pinjam }}</td>
-          <td>{{ $order->tgl_kembali }}</td>
+          <td>{{ $order->rent_date }}</td>
+          <td>{{ $order->return_date }}</td>
           <td>
-            @if($order->is_returned === 1)
-            Yes
+            @if($order->status == false)
+            Not Returned
             @else
-            No
+            Returned
             @endif
-          </td>
+        </td>
+          <td>{{ $order->actual_return_date }}</td>
           <td>{{ $order->denda }}</td>
-          <td>
-            <button class="btn btn-primary">Kembalikan</button>
+          <td class="aksi">
+            @if($order->request_return == true  && $order->status == false)
+            <form action="/return-product/{{ $order->id }}" method="POST">
+              @csrf
+              <button type="submit" value="{{ $order->id }}" class="btn btn-primary">Return</button>
+            </form>
+            @else
+            No Action
+            @endif
           </td>
         </tr>
         @endforeach

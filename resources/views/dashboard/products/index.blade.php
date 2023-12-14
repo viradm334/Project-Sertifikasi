@@ -20,7 +20,6 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">ID Produk</th>
           <th scope="col">Nama Produk</th>
           <th scope="col">Stok</th>
           <th scope="col">Kategori</th>
@@ -32,12 +31,12 @@
        @foreach($products as $product)    
         <tr>
           <td>{{ $loop->iteration }}</td>
-          <td>{{ $product->id }}</td>
           <td>{{ $product->name }}</td>
           <td>{{ $product->stock }}</td>
           <td>{{ $product->category->name }}</td>
           <td>{{ number_format($product->price) }}</td>
           <td>
+            <a href="/dashboard/products/{{ $product->id }}" class="badge bg-info"><i class="bi bi-eye h6"></i></a>
             <a href="/dashboard/products/{{ $product->id }}/edit" class="badge bg-warning"><i class="bi bi-pen h6"></i></a>
             <form action="/dashboard/products/{{ $product->id }}" method="POST" class="d-inline">
                 @method('delete')

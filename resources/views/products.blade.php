@@ -1,6 +1,36 @@
 @extends('layouts.main')
 
 @section('container')
+
+@if (session()->has('success'))
+
+    <div class="alert alert-success col-lg-6" role="alert">
+        {{ session('success') }}
+    </div>
+    
+@endif
+
+@if(session()->has('error'))
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+@endif
+
+<div class="row justify-content-center mb-3">
+  <div class="col-md-6">
+      <form action="/products" method="GET">
+          @if (request('name'))
+              <input type="hidden" name="category" value="{{ request('name') }}">
+          @endif
+          <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Search.." name="search" value="{{ request('search') }}">
+              <button class="btn btn-dark" type="submit">Search</button>
+          </div>
+      </form>
+  </div>
+</div>
+
 <div id="carouselExampleCaptions" class="carousel slide mb-3">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -49,7 +79,10 @@
             <h5 class="card-title">{{ $product->name }}</h5>
             <h6 class="card-text">{{ $product->category->name }}</h6>
             <p class="card-text">Rp {{ $product->price }}/Month</p>
-            <a href="/products/{{ $product->slug }}" class="btn btn-primary">Pinjam</a>
+            <a href="/products/{{ $product->slug }}" class="btn btn-primary {{ $product->stock === 0 ? 'disabled' : '' }}"
+              @if($product->stock === 0) aria-disabled="true" disabled @endif>
+              {{ $product->stock === 0 ? 'Stok Habis' : 'Pinjam' }}
+           </a>           
         </div>
         </div>
     </div>

@@ -3,28 +3,75 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\PeminjamanModel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class pinjamController extends Controller
 {
-    function pinjam_store( Request $request )
-    {
-        $request["rent_date"] = Carbon::now()->toDateString();
-        $request["return_date"] = Carbon::now()->addDays(5)->toDateString();
-        try {
-            DB::beginTransaction();
-            PeminjamanModel::create($request->except('category'));
-            DB::commit();
 
-            $alatpinjam = PeminjamanModel::where('actual_return_date', $request->actual_return_date);
-            $alat = $alatpinjam->first();
-            $alat->save();
-            return redirect('/');
-        } catch (\Throwable $throw) {
-            DB::rollback();
-            dd($throw);
-        }
+    public function index()
+    {
+        return view('dashboard.orders.index', [
+            'orders' => PeminjamanModel::all()
+        ]);
     }
+
+    public function show(){
+        return view('user_orders', [
+            'orders' => PeminjamanModel::where('user_id', auth()->user()->id)->get(),
+            'title' => 'My Orders'
+        ]);
+    }
+
+    public function pinjamBarang(Request $request){
+        $user_id = Auth::user()->id;
+
+        $orders_count = PeminjamanModel::where('user_id', auth()->user()->id)
+                        ->where('status', false)
+                        ->count();
+
+        if($orders_count > 2){
+            return redirect('/products')->with('error', 'Anda tidak bisa memiliki order aktif lebih dari 2!');
+        }
+
+        $pinjam = new PeminjamanModel();
+        $pinjam->user_id = $user_id;
+        $pinjam->product_id = (int)$request->product_id;
+        $pinjam->rent_date = Carbon::now();
+        $pinjam->return_date = Carbon::now()->addDays(5);
+
+        $pinjam->save();
+
+        Product::where('id', $request->product_id)->decrement('stock');
+
+        return redirect('/products')->with('success', 'Peminjaman berhasil!');
+
+
+    }
+
+    public function returnBarang(Request $request, $id){
+        $returnProduct = PeminjamanModel::findOrFail($id);
+        $returnProduct->status = true;
+        $returnProduct->actual_return_date = Carbon::now();
+
+        $returnProduct->save();
+
+        Product::where('id', $returnProduct->product_id)->increment('stock');
+
+        return redirect('/dashboard/orders')->with('success', 'Pengembalian berhasil!');
+    }
+
+    public function sendReturnRequest(Request $request, $id){
+        $returnOrder = PeminjamanModel::findOrFail($id);
+        $returnOrder->request_return = true;
+
+        $returnOrder->save();
+
+        return redirect('/my-orders')->with('success', 'Request pengembalian berhasil dikirim!');
+    }
+
+
 }

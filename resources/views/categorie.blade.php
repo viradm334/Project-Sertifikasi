@@ -1,11 +1,11 @@
 @extends('layouts.main')
 
 @section('container')
-  <h1 class="mb-5">Category : {{ $category }}</h1>
-  <div class="row">
+  <h2 class="mb-5 text-center">Category : {{ $category }}</h2>
+  <div class="row mb-5">
     @foreach ($product as $p)
-      <div class="col-md-3 mb-4">
-        <div class="card" style="width: 18rem;">
+      <div class="col-md-4 mb-3">
+        <div class="card">
             <img src="{{ asset('storage/' . $p->image) }}" alt="" class="img-fluid">
           <div class="card-body">
             <h5 class="card-title">{{ $p->name }}</h5>

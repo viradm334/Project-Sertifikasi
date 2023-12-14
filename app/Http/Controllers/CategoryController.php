@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         return view('dashboard.categories.index', [
-            'categories' => Category::all(),
+            'categories' => Category::all()
         ]);
     }
 
@@ -45,7 +45,9 @@ class CategoryController extends Controller
             'title'=>'category',
             'category'=>Category::all()
         ]);
-    }
+    }    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
         return view('dashboard.categories.create');
@@ -66,13 +68,7 @@ class CategoryController extends Controller
         return redirect('/dashboard/categories')->with('success', 'New category has been created!');
     }
 
-//     /**
-//      * Show the form for editing the specified resource.
-//      */
-//     public function edit(Category $category)
-//     {
-//         //
-//     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -95,6 +91,8 @@ class CategoryController extends Controller
         ];
 
         $validatedData = $request->validate($rules);
+
+        //dd($validatedData);
 
         Category::where('id', $category->id)
             ->update($validatedData);

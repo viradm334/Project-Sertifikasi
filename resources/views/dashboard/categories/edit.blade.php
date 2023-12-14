@@ -13,7 +13,7 @@
             @csrf
             <div class="mb-3">
               <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required autofocus>
+              <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $category->name) }}" required autofocus>
               @error('name')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -22,7 +22,7 @@
             </div>
             <div class="mb-3">
               <label for="slug" class="form-label">Slug</label>
-              <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" required>
+              <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug"  value="{{ old('slug', $category->slug) }}" required>
               @error('slug')
                 <div class="invalid-feedback">
                     {{ $message }}

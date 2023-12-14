@@ -15,6 +15,7 @@
           <h4 class="mb-5">Price : Rp {{ $p->price }}/month</h4>
           <form action="/pinjam-barang/{{ $p->id }}" method="post" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="product_id" id="product_id" value="{{ $p->id }}">
             <div class="text-center">
               <button type="submit" class="btn btn-primary btn-lg mt-5">Pinjam</button>
             </div>

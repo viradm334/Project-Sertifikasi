@@ -23,7 +23,9 @@
                   Welcome back, {{ auth()->user()->name }}!
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/dashboard"><i class="bi bi-layout-text-sidebar-reverse"></i> Profile</a></li>
+                  <li><a class="dropdown-item" href="/profile"><i class="bi bi-file-earmark-person"></i> Profile</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/my-orders"><i class="bi bi-layout-text-sidebar-reverse"></i> My Orders</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li>
                     <form action="/logout" method="POST">

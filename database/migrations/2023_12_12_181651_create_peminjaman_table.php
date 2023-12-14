@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('peminjaman_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->string('status')->default("kembalikan");
+            $table->foreignId('user_id');
+            $table->foreignId('product_id');
+            $table->boolean('status')->default(false);
             $table->date('rent_date');
             $table->date('return_date');
             $table->date('actual_return_date')->nullable();
+            $table->boolean('request_return')->default(false);
+            $table->integer('denda')->default(0);
             $table->timestamps();
 
         });
