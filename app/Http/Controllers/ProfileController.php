@@ -80,29 +80,7 @@ class ProfileController extends Controller
                 ]);
             return redirect('/profile')->with('updateProfile', "User succesfully updated!");
     }
-        // $rules = [
-        //     'name' => 'required|max:255',
-        //     'image' => 'image|file|max:2048',
-        // ];
 
-        // $validatedData = $request->validate($rules);
-
-        // if($request->file('image')){
-        //     if($user->image != null){
-        //         Storage::delete($user->image);
-        //     }
-        //     $validatedData['image'] = $request->file('image')->store('post-images');
-        // }
-
-        // User::where('id', $user->id)
-        //     ->update($validatedData);
-
-        // return redirect('/profile')->with('success', 'User succesfully updated!');
-    // }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(User $user)
     {
         //
