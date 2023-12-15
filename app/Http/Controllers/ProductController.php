@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -34,11 +35,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $Product = new Product();
+
         $validatedData = $request->validate([
             'name' => 'required',
             'slug' => 'required|unique:products',
             'stock' => 'required|min:0',
-            'category_id' => 'required',
             'price' => 'required|min:0',
             'image' => 'image|file|max:2048',
             'description' => 'required|max:2000'
@@ -51,7 +53,16 @@ class ProductController extends Controller
         $validatedData['stock'] = (int)$validatedData['stock'];
         $validatedData['price'] = (int)$validatedData['price'];
 
-        Product::create($validatedData);
+        $insertedId = $Product->insertGetId($validatedData);
+
+        if($request->categories) {
+            foreach($request->categories as $category) {
+                ProductCategory::create([
+                    'product_id' => $insertedId,
+                    'category_id' => $category,
+                ]);
+            }
+        }
 
         return redirect('/dashboard/products')->with('success', 'New product has been created!');
     }
@@ -81,8 +92,11 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $productCategories = $product->categories->pluck('id')->toArray();
+
         return view('dashboard.products.edit', [
             'product' => $product,
+            'productCategories' => $productCategories,
             'categories' => Category::all()
         ]);
     }
@@ -95,7 +109,6 @@ class ProductController extends Controller
         $rules = [
             'name' => 'required',
             'stock' => 'required|min:0',
-            'category_id' => 'required',
             'image' => 'image|file|max:2048',
             'price' => 'required|min:0',
             'description' => 'required|max:2000'
@@ -119,6 +132,25 @@ class ProductController extends Controller
 
         Product::where('id', $product->id)
             ->update($validatedData);
+
+        $productCategories = $product->categories->pluck('id')->toArray();
+
+        if(!$request->categories) {
+            ProductCategory::where('product_id', $product->id)->delete();
+        }else{
+            foreach($request->categories as $category) {
+                if(!in_array($category, $productCategories)) {
+                    ProductCategory::create([
+                        'product_id' => $product->id,
+                        'category_id' => $category,
+                    ]);
+                }
+            }
+
+            $categoryToRemove = array_diff($productCategories, $request->categories);
+
+            ProductCategory::where('product_id', $product->id)->whereIn('category_id', $categoryToRemove)->delete();
+        }
 
         return redirect('/dashboard/products')->with('success', 'Product has been successfully updated!');
     }

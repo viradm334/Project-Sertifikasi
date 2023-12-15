@@ -68,7 +68,6 @@ class DatabaseSeeder extends Seeder
             'description' => 'TV keluaran terbaru',
             'stock' => 5,
             'price' => 100000,
-            'category_id' => 1
         ]);
 
         Product::create([
@@ -77,7 +76,6 @@ class DatabaseSeeder extends Seeder
             'description' => 'Mesin cuci andalan laundry se-Indonesia',
             'stock' => 2,
             'price' => 200000,
-            'category_id' => 2
         ]);
 
         Product::create([
@@ -86,7 +84,6 @@ class DatabaseSeeder extends Seeder
             'description' => 'Kulkas double door yang bisa menampung semua belanjaan Anda!',
             'stock' => 4,
             'price' => 300000,
-            'category_id' => 3
         ]);
     }
 }

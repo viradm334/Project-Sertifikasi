@@ -10,9 +10,14 @@ class HomeProductController extends Controller
 {
     public function index()
     {
+        $product = Product::latest();
+        if(request('search')){
+            $product->where('name', 'like', '%' .request('search') .'%');
+        }
+
         return view('products', [
             'title' => 'Product',
-            'products' => Product::all()
+            'products' => $product->get()
         ]);
     }
 

@@ -56,6 +56,10 @@ class pinjamController extends Controller
         $returnProduct = PeminjamanModel::findOrFail($id);
         $returnProduct->status = true;
         $returnProduct->actual_return_date = Carbon::now();
+        // Untuk demo denda
+        // $returnProduct->actual_return_date = Carbon::now()->addDays(6);
+
+        $returnProduct->denda = $returnProduct->actual_return_date > $returnProduct->return_date ? $returnProduct->actual_return_date->addDay()->diffInDays($returnProduct->return_date) * 20000 : 0;
 
         $returnProduct->save();
 

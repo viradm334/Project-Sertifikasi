@@ -9,7 +9,11 @@
             <img src="{{ asset('storage/' . $p->image) }}" alt="" class="img-fluid">
           <div class="card-body">
             <h5 class="card-title">{{ $p->name }}</h5>
-            <h6 class="card-text">{{ $p->category->name }}</h6>
+            <h6 class="card-text">
+              @foreach ($p->categories as $category)
+              {{ $category->name }},
+              @endforeach
+            </h6>
             <p class="card-text">Rp {{ $p->price }}/Month</p>
             <a href="/products/{{ $p->slug }}" class="btn btn-primary">Pinjam</a>
           </div>

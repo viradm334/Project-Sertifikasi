@@ -11,7 +11,7 @@
     <div class="alert alert-success col-lg-6" role="alert">
         {{ session('success') }}
     </div>
-    
+
 @endif
 
 <div class="table-responsive small col-lg-13">
@@ -30,11 +30,11 @@
         </tr>
       </thead>
       <tbody>
-         @foreach($orders as $order)   
+         @foreach($orders as $order)
         <tr>
           <td>{{ $loop->iteration }}</td>
           <td>{{ $order->user->name }}</td>
-          <td>{{ $order->product->name }}</td>
+          <td>{{ optional($order->product)->name }}</td>
           <td>{{ $order->rent_date }}</td>
           <td>{{ $order->return_date }}</td>
           <td>
@@ -61,5 +61,5 @@
       </tbody>
     </table>
   </div>
-    
+
 @endsection

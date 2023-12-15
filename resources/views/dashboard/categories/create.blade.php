@@ -29,7 +29,7 @@
               @enderror
             </div>
             <button type="submit" class="btn btn-primary">Create Category</button>
-        </form>    
+        </form>
     </div>
 </div>
 

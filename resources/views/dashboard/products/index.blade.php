@@ -11,7 +11,7 @@
     <div class="alert alert-success col-lg-6" role="alert">
         {{ session('success') }}
     </div>
-    
+
 @endif
 
 <div class="table-responsive small col-lg-10">
@@ -28,12 +28,16 @@
         </tr>
       </thead>
       <tbody>
-       @foreach($products as $product)    
+       @foreach($products as $product)
         <tr>
           <td>{{ $loop->iteration }}</td>
           <td>{{ $product->name }}</td>
           <td>{{ $product->stock }}</td>
-          <td>{{ $product->category->name }}</td>
+          <td>
+            @foreach ($product->categories as $category)
+            <a class="">{{ $category->name }}</a>,
+            @endforeach
+          </td>
           <td>{{ number_format($product->price) }}</td>
           <td>
             <a href="/dashboard/products/{{ $product->id }}" class="badge bg-info"><i class="bi bi-eye h6"></i></a>
@@ -49,5 +53,5 @@
       </tbody>
     </table>
   </div>
-    
+
 @endsection

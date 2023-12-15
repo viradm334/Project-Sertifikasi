@@ -10,7 +10,11 @@
       <div class="col-md-6">
         <div class="card-body">
           <h1 class="card-title">{{ $p->name }}</h1>
-          <p class="mt-5">Category :  <a class="text-decoration-none text-danger" href="/categories/{{ $p->category->slug }}">{{ $p->category->name }} </a></p>
+          <p class="mt-5">Category :
+            @foreach ($p->categories as $category)
+              <a href="/categories/{{ $category->slug }}">{{ $category->name }}</a>,
+            @endforeach
+          </a></p>
           <p class="card-text">{{ $p->description }}</p>
           <h4 class="mb-5">Price : Rp {{ $p->price }}/month</h4>
           <form action="/pinjam-barang/{{ $p->id }}" method="post" enctype="multipart/form-data">

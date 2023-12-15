@@ -48,7 +48,7 @@
                         </div>
                         <div class="col-md-12">
                             <label for="address" class="labels">Alamat</label>
-                            <input type="text"  name="address" id="address" class="form-control @error('address') is-invalid @enderror" placeholder="enter address line 2" value="{{ old('address', $user->address) }}">
+                            <input type="text"  name="address" id="address" class="form-control @error('address') is-invalid @enderror" placeholder="address" value="{{ old('address', $user->address) }}">
                             @error('address')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -73,7 +73,7 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="phone_number" class="labels">No.HP</label>
-                            <input type="text" name="phone_number" id="phone_number" class="form-control @error('phone_number') is-invalid @enderror" placeholder="country" value="{{ old('phone_number', $user->phone_number) }}">
+                            <input type="text" name="phone_number" id="phone_number" class="form-control @error('phone_number') is-invalid @enderror" placeholder="No.Handphone" value="{{ old('phone_number', $user->phone_number) }}">
                             @error('phone_number')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -115,7 +115,7 @@
 
     function previewImage() {
         const image = document.querySelector('#image');
-        const imgPreview = document.querySelector('.img-preview');  
+        const imgPreview = document.querySelector('.img-preview');
 
         imgPreview.style.display = 'block';
 

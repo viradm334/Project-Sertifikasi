@@ -47,14 +47,10 @@
               @enderror
             </div>
             <div class="mb-3">
-              <label for="category" class="form-label">Category</label>
-              <select class="form-select" name="category_id">
+              <label for="multiple-select-field" class="form-label">Category</label>
+              <select id="multiple-select-field" class="form-select" name="categories[]" data-placeholder="Choose anything" multiple>
                 @foreach ($categories as $category)
-                    @if(old('category_id') == $category->id)
-                        <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
-                    @else
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endif
+                  <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
               </select>
             </div>
@@ -75,15 +71,22 @@
                 <p class="text-danger">{{ $message }}</p>
               @enderror
             </div>
-    
+
             <button type="submit" class="btn btn-primary">Create Product</button>
-        </form>    
+        </form>
     </div>
 </div>
+@endsection
 
-
-
+@push('scripts')
 <script>
+    $( '#multiple-select-field' ).select2( {
+        theme: "bootstrap-5",
+        width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+        placeholder: $( this ).data( 'placeholder' ),
+        closeOnSelect: false,
+    } );
+
     const title = document.querySelector('#title');
     const slug = document.querySelector('#slug');
 
@@ -99,7 +102,7 @@
 
     function previewImage() {
         const image = document.querySelector('#image');
-        const imgPreview = document.querySelector('.img-preview');  
+        const imgPreview = document.querySelector('.img-preview');
 
         imgPreview.style.display = 'block';
 
@@ -112,6 +115,4 @@
     }
 
 </script>
-
-
-@endsection
+@endpush

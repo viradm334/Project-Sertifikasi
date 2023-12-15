@@ -7,7 +7,7 @@
     <div class="alert alert-success col-lg-6" role="alert">
         {{ session('success') }}
     </div>
-    
+
 @endif
 
 @if(session()->has('error'))
@@ -77,12 +77,16 @@
             <img src="{{ asset('storage/' . $product->image) }}" alt="" class="img-fluid">
         <div class="card-body">
             <h5 class="card-title">{{ $product->name }}</h5>
-            <h6 class="card-text">{{ $product->category->name }}</h6>
+            <h6 class="card-text">
+              @foreach ($product->categories as $category)
+              <a href="/categories/{{ $category->slug }}">{{ $category->name }}</a>,
+              @endforeach
+            </h6>
             <p class="card-text">Rp {{ $product->price }}/Month</p>
             <a href="/products/{{ $product->slug }}" class="btn btn-primary {{ $product->stock === 0 ? 'disabled' : '' }}"
               @if($product->stock === 0) aria-disabled="true" disabled @endif>
               {{ $product->stock === 0 ? 'Stok Habis' : 'Pinjam' }}
-           </a>           
+           </a>
         </div>
         </div>
     </div>

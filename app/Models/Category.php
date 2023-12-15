@@ -12,8 +12,9 @@ class Category extends Model
 
     protected $guarded = ['id'];
 
-    public function products(){
-        return $this->hasMany(Product::class);
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
     }
 
     public function getRouteKeyName(): string
